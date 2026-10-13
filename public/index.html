@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ListingLift — local AI listings for resellers</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="bg-glow"></div>
+<header class="hero">
+  <div class="brand">
+    <span class="logo">⬆️</span>
+    <span class="brand-name">ListingLift</span>
+  </div>
+  <p class="tagline">Snap a photo. Get a sellable listing. <strong>100% on your laptop</strong> — nothing uploaded, no per-listing API fees.</p>
+  <div class="badge-row">
+    <span class="badge">🟢 Local model: Gemma (Ollama)</span>
+    <span class="badge">🔒 Photos never leave this device</span>
+    <span id="health-badge" class="badge badge-pending">checking model…</span>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="panel upload-panel">
+    <h2>1. Your product</h2>
+    <form id="listing-form">
+      <label class="dropzone" id="dropzone">
+        <input type="file" id="photo" accept="image/*" required hidden />
+        <span id="dropzone-label">📷 Click or drop a product photo</span>
+        <img id="preview" alt="preview" hidden />
+      </label>
+
+      <label>Platform
+        <select id="platform">
+          <option>Etsy</option>
+          <option>eBay</option>
+          <option>Depop</option>
+          <option>Facebook Marketplace</option>
+          <option>Poshmark</option>
+        </select>
+      </label>
+
+      <label>Category <small>(optional — model can infer it)</small>
+        <input id="category" type="text" placeholder="e.g. vintage denim jacket" />
+      </label>
+
+      <label>Keywords to include <small>(optional)</small>
+        <input id="keywords" type="text" placeholder="e.g. Y2K, cottagecore, handmade" />
+      </label>
+
+      <label>Notes for the model <small>(condition, brand, size, flaws…)</small>
+        <textarea id="notes" rows="3" placeholder="e.g. size M, small stain on left cuff, smoke-free home"></textarea>
+      </label>
+
+      <button type="submit" id="generate-btn">✨ Generate Listing</button>
+    </form>
+  </section>
+
+  <section class="panel result-panel">
+    <h2>2. Your listing</h2>
+    <div id="empty-state" class="empty-state">Upload a photo and generate to see your listing here.</div>
+    <div id="loading" class="loading" hidden>
+      <div class="spinner"></div>
+      <p>Running the local Gemma vision model…</p>
+    </div>
+    <div id="result" hidden>
+      <div class="field">
+        <div class="field-head"><h3>Title</h3><button class="copy" data-target="out-title">Copy</button></div>
+        <p id="out-title" class="copyable"></p>
+      </div>
+      <div class="field">
+        <div class="field-head"><h3>Description</h3><button class="copy" data-target="out-description">Copy</button></div>
+        <p id="out-description" class="copyable multiline"></p>
+      </div>
+      <div class="field">
+        <div class="field-head"><h3>Tags</h3><button class="copy" data-target="out-tags">Copy</button></div>
+        <div id="out-tags" class="tags copyable"></div>
+      </div>
+      <div class="field-grid">
+        <div class="field">
+          <h3>Suggested price</h3>
+          <p id="out-price" class="pill"></p>
+        </div>
+        <div class="field">
+          <h3>Condition notes</h3>
+          <p id="out-condition"></p>
+        </div>
+      </div>
+      <div class="field">
+        <h3>Platform tip for <span id="out-platform-name"></span></h3>
+        <p id="out-tips"></p>
+      </div>
+    </div>
+    <div id="error" class="error" hidden></div>
+  </section>
+</main>
+
+<footer>
+  Built for the <a href="https://dev.to/challenges/hf26" target="_blank" rel="noopener">Hacktoberfest Open-Source AI Challenge</a> — Week 2: Side Hustle · Runs entirely on a local open-weight model via <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>.
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
